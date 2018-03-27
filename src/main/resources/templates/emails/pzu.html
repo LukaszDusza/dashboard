@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Title of the document</title>
+    <style>
+
+* {
+    margin: 0;
+    padding: 0;
+}
+.grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto auto auto auto auto;
+    grid-template-areas:
+            "logo"
+            "title"
+            "product-description"
+            "product-range"
+            "calculate-title"
+            "calculate-table"
+            "footer";
+    grid-gap: 20px;
+}
+
+.logo {
+    grid-area: logo;
+    justify-self: center;
+}
+.title {
+    grid-area: title;
+    font-weight: bold;
+
+}
+.product-description {
+    grid-area: product-description;
+    font-weight: bold;
+    text-align: center;
+}
+.product-range {
+    grid-area: product-range;
+}
+.calculate-title {
+    grid-area: calculate-title;
+    font-weight: bold;
+    text-align: center;
+}
+.calculate-table {
+    grid-area: calculate-table;
+}
+.footer {
+    grid-area: footer;
+    text-align: left;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+/* Zebra striping */
+tr:nth-of-type(even, odd) {
+    background: #eee;
+}
+th {
+    background: #eee;
+    color: black;
+    font-weight: bold;
+
+}
+td, th {
+    padding: 6px;
+    border: 1px solid #ccc;
+    text-align: left;
+}
+
+.grid div:nth-child(even) {
+   /* background-color: lightgrey;*/
+}
+.grid div:nth-child(odd) {
+   /* background-color: darkgrey;*/
+}
+
+@media screen and (min-width: 800px){
+    .grid {
+        display: grid;
+        grid-template-columns: auto 320px 320px auto;
+        grid-template-rows:  auto auto auto auto auto auto auto;
+        grid-template-areas:
+                ". logo logo ."
+                ". title title ."
+                ". product-description product-description ."
+                ". product-range product-range ."
+                ". calculate-title calculate-title ."
+                ". calculate-table calculate-table ."
+                ". footer footer .";
+        grid-gap: 20px;
+
+    }
+}
+
+	</style>
+</head>
+
+
+<body>
+<div class="grid">
+    <div class="logo"> <img src="images/pzu-logo.png" width="100" height="100"></div>
+
+    <div class="title">
+        <table>
+            <tbody>
+            <tr>
+                <td>
+                    Indywidualny Program Ochrony Ubezpieczeniowej
+                    Pani XY Wiek: 43 lat
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="product-description">
+        INDYWIDUALNE UBEZPIECZENIE NA ŻYCIE I DOŻYCIE
+        PZU WIĘCEJ NIŻ OCHRONA
+    </div>
+
+    <div class="product-range">
+        <table>
+            <!--<thead>
+            <tr>
+                <th></th>
+            </tr>
+            </thead>-->
+            <tbody>
+            <tr>
+                <td style="font-weight: bold">Przedmiot i zakres ubezpieczenia</td>
+                <td>
+                    PZU WIĘCEJ NIŻ OCHRONA
+                    Przedmiot ubezpieczenia: życie Ubezpieczonego.
+                    Zakres ubezpieczenia obejmuje następujące zdarzenia:
+                    1) śmierć ubezpieczonego w okresie odpowiedzialności PZU Życie SA,
+                    2) dożycie przez Ubezpieczonego końca okresu ubezpieczenia.
+                    Dodatkowe ubezpieczenie NW
+                    Przedmiot ubezpieczenia: życie Ubezpieczonego.
+                    Zakres ubezpieczenia: śmierć Ubezpieczonego spowodowana nieszczęśliwym
+                    wypadkiem.
+                    Dodatkowe ubezpieczenie WK
+                    Przedmiot ubezpieczenia: życie Ubezpieczonego.
+                    Zakres ubezpieczenia: śmierc spowodowana wypadkiem komunikacyjnym.
+                    Dodatkowe ubezpieczenie LS
+                    Przedmiot ubezpieczenia: zdrowie Ubezpieczonego.
+                    Zakres ubezpieczenia: pobyt w szpitalu i pobyt na OIT Ubezpieczonego spowodowany
+                    nieszczęśliwym wypadkiem.
+                </td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold">Okres ubezpieczenia/ Opłaty składki</td>
+                <td>
+                    20 lat
+                </td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold">Częstotliwość opłaty składki</td>
+                <td>
+                    Miesięczna
+                </td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold">Sumy Ubzpieczenia</td>
+                <td>
+                    50 000 zł w razie śmierci lub dożycia przez Ubezpieczonego końca okresu
+                    ubezpieczenia.
+                    50 000 zł w razie śmierci Ubezpieczonego spowodowanej nieszczęśliwym
+                    wypadkiem.
+                    50 000 zł w razie śmierci ubezpieczonego spowodowanej wypadkiem
+                    komunikacyjnym.
+                    100,00 zł za dzień pobytu w szpitalu spowodowany nieszczęśliwym wypadkiem,
+                    100,00 zł za dzień pobytu na OIT spowodowany nieszczęśliwym wypadkiem.
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+    <div class="calculate-title">
+        Kalkulacja składki**
+    </div>
+
+    <div class="calculate-table">
+        <table>
+            <thead>
+            <tr>
+               <th>
+                   Ubezpieczenie
+               </th>
+                <th>
+                    Skladka w zł
+                </th>
+            </tr>
+
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                PZU WIĘCEJ NIŻ OCHRONA
+            </td>
+                <td>
+                    244,50
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Dodatkowe ubzepieczenie NW
+                </td>
+                <td>
+                    244,50
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Dodatkowe ubezpieczenie WK
+                </td>
+                <td>
+                    244,50
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Dodatkowe Ubezpieczenie LS
+                </td>
+                <td>
+                    244,50
+                </td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold">
+                    Razem
+                </td>
+                <td style="font-weight: bold">
+                    244,50
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="footer">
+        * Wartości sum ubezpieczenia aktualne na dzień zawarcia umowy (bez uzwględnienia udziału w zyskach i indeksacji składki).
+        ** Wartości skalkulowanych składek są danymi szacunkowymi i po ocenie ryzyka mogą ulec zmianie.
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>
