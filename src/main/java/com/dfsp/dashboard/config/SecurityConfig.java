@@ -18,14 +18,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         try {
             httpSecurity.authorizeRequests()
                     .antMatchers("/")
-                    .permitAll()
+                    .permitAll();
                     //  .antMatchers("/api/user/*").hasRole(USER)
                     // .antMatchers("/api/admin/*").hasRole(ADMIN)
                     //.and()
-                    .anyRequest() //zamist tergo co na powyzej
-                    .authenticated() //zamist tego co powyzej
-                    .and() //nie potrzebne gdy gora odkomentowana
-                    .formLogin();
+
+            /*ENABLE AUTH*/
+                   // .anyRequest() //zamist tergo co na powyzej
+                   // .authenticated() //zamist tego co powyzej
+                    //.and() //nie potrzebne gdy gora odkomentowana
+                    //.formLogin();
 
             httpSecurity.csrf().disable(); //odblokowuje POST request (403 forbidden)
 

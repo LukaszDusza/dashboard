@@ -19,9 +19,9 @@ public class MarketController {
     @Autowired
     MarketRepository marketRepository;
 
-
     @GetMapping("/all")
     public List<Market> getMarket() {
+
         return marketRepository.findAll();
     }
 
