@@ -51,9 +51,45 @@ public class RaportDas {
     private int poziom7;
     private String mzaKierownikZespolu;
     private String poziom7knf;
+    private int numberOfContract;
 
     public RaportDas() {
 
+    }
+
+    public RaportDas(String nazwaAgenta, BigDecimal skladka) {
+        this.nazwaAgenta = nazwaAgenta;
+        this.skladka = skladka;
+    }
+
+    public RaportDas(String nazwaAgenta,BigDecimal skladka, String nrWewnAgenta, String nrKnfAgenta, String uzytkownik, String nrKnfUzytkownika, String kanalDystrybucji, String poziom1KNF, int poziom2, String nazwaSektoraSprzedazy, String poziom2KNF, int poziom3, String dyrektorSektora, String poziom3KNF, int poziom4, String segmentSprzedazy, String poziom4knf, int poziom5, String drEkspertSegmentu, String poziom5knf, int poziom6, String miasto, String poziom6knf, int poziom7, String mzaKierownikZespolu, String poziom7knf, int numberOfContract) {
+        this.nazwaAgenta = nazwaAgenta;
+        this.skladka = skladka;
+        this.nrWewnAgenta = nrWewnAgenta;
+        this.nrKnfAgenta = nrKnfAgenta;
+        this.uzytkownik = uzytkownik;
+        this.nrKnfUzytkownika = nrKnfUzytkownika;
+        this.kanalDystrybucji = kanalDystrybucji;
+        this.poziom1KNF = poziom1KNF;
+        this.poziom2 = poziom2;
+        this.nazwaSektoraSprzedazy = nazwaSektoraSprzedazy;
+        this.poziom2KNF = poziom2KNF;
+        this.poziom3 = poziom3;
+        this.dyrektorSektora = dyrektorSektora;
+        this.poziom3KNF = poziom3KNF;
+        this.poziom4 = poziom4;
+        this.segmentSprzedazy = segmentSprzedazy;
+        this.poziom4knf = poziom4knf;
+        this.poziom5 = poziom5;
+        this.drEkspertSegmentu = drEkspertSegmentu;
+        this.poziom5knf = poziom5knf;
+        this.poziom6 = poziom6;
+        this.miasto = miasto;
+        this.poziom6knf = poziom6knf;
+        this.poziom7 = poziom7;
+        this.mzaKierownikZespolu = mzaKierownikZespolu;
+        this.poziom7knf = poziom7knf;
+        this.numberOfContract = numberOfContract;
     }
 
     public Long getId() {
@@ -374,6 +410,14 @@ public class RaportDas {
 
     public void setPoziom7knf(String poziom7knf) {
         this.poziom7knf = poziom7knf;
+    }
+
+    public int getNumberOfContract() {
+        return numberOfContract;
+    }
+
+    public void setNumberOfContract(int numberOfContract) {
+        this.numberOfContract = numberOfContract;
     }
 }
 
