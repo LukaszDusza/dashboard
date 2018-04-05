@@ -1,9 +1,11 @@
 package com.dfsp.dashboard.entities;
 
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.sql.Date;
 
 @Entity
 @Table(name = "raport_das")
@@ -13,8 +15,13 @@ public class RaportDas {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private Long numerKalkulacji;
+
+    //@Type(type="date")
     private Date dataKalkulacji;
+
     private  int numerUmowy;
+
+   // @Type(type="date")
     private  Date dataZawarcia;
     private  Date wazneOd;
     private  Date wazneDo;
@@ -419,7 +426,29 @@ public class RaportDas {
     public void setNumberOfContract(int numberOfContract) {
         this.numberOfContract = numberOfContract;
     }
+
+
+//    public String getDataKalkulacji() {
+//        return dataKalkulacji;
+//    }
+//
+//    public void setDataKalkulacji(String dataKalkulacji) {
+//        this.dataKalkulacji = dataKalkulacji;
+//    }
+//
+//    public String getDataZawarcia() {
+//        return dataZawarcia;
+//    }
+//
+//    public void setDataZawarcia(String dataZawarcia) {
+//        this.dataZawarcia = dataZawarcia;
+//    }
 }
+
+
+
+
+
 
 
 
