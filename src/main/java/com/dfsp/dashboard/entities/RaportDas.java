@@ -64,9 +64,25 @@ public class RaportDas {
 
     }
 
-    public RaportDas(String nazwaAgenta, BigDecimal skladka) {
-        this.nazwaAgenta = nazwaAgenta;
+//    public RaportDas(String nazwaAgenta, BigDecimal skladka) {
+//        this.nazwaAgenta = nazwaAgenta;
+//        this.skladka = skladka;
+//    }
+
+//    public RaportDas(String nazwaAgenta, BigDecimal skladka) {
+//        this.nazwaAgenta = nazwaAgenta;
+//        this.skladka = skladka;
+//    }
+
+    public RaportDas(String platnosc, BigDecimal skladka) {
+        this.platnosc = platnosc;
         this.skladka = skladka;
+    }
+
+    public RaportDas(String nazwaProduktu, BigDecimal skladka, int numberOfContract) {
+        this.nazwaProduktu = nazwaProduktu;
+        this.skladka = skladka;
+        this.numberOfContract = numberOfContract;
     }
 
     public RaportDas(String nazwaAgenta,BigDecimal skladka, String nrWewnAgenta, String nrKnfAgenta, String uzytkownik, String nrKnfUzytkownika, String kanalDystrybucji, String poziom1KNF, int poziom2, String nazwaSektoraSprzedazy, String poziom2KNF, int poziom3, String dyrektorSektora, String poziom3KNF, int poziom4, String segmentSprzedazy, String poziom4knf, int poziom5, String drEkspertSegmentu, String poziom5knf, int poziom6, String miasto, String poziom6knf, int poziom7, String mzaKierownikZespolu, String poziom7knf, int numberOfContract) {
