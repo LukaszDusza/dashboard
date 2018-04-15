@@ -79,6 +79,11 @@ public class RaportDas {
         this.skladka = skladka;
     }
 
+    public RaportDas(BigDecimal skladka, String segmentSprzedazy) {
+        this.skladka = skladka;
+        this.segmentSprzedazy = segmentSprzedazy;
+    }
+
     public RaportDas(String nazwaProduktu, BigDecimal skladka, int numberOfContract) {
         this.nazwaProduktu = nazwaProduktu;
         this.skladka = skladka;
@@ -114,6 +119,8 @@ public class RaportDas {
         this.poziom7knf = poziom7knf;
         this.numberOfContract = numberOfContract;
     }
+
+
 
     public Long getId() {
         return id;

@@ -287,4 +287,43 @@ public class RaportDasController {
 
     }
 
+
+    @GetMapping("/sector/{dateFrom}/{dateTo}/{status}")
+    public List<RaportDas> getRaportDasBySector(@PathVariable String dateFrom, @PathVariable String dateTo, @PathVariable String status) {
+
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM d, yyyy", Locale.ENGLISH);
+//        LocalDate dateFromFormat = LocalDate.parse(dateFrom, formatter);
+//        LocalDate dateToFormat = LocalDate.parse(dateTo, formatter);
+
+        java.sql.Date dateFromFormat = null;
+        java.sql.Date dateToFormat = null;
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date parsedFrom = format.parse(dateFrom);
+            Date parsedTo = format.parse(dateTo);
+
+            dateFromFormat = new java.sql.Date(parsedFrom.getTime());
+            dateToFormat = new java.sql.Date(parsedTo.getTime());
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        List<RaportDas> result = raportDasRepository.findByDateAndStatus(dateFromFormat, dateToFormat, status);
+        Map<String, RaportDas> hm = new LinkedHashMap<>();
+
+        for (RaportDas r : result) {
+            String key = r.getSegmentSprzedazy();
+            //   RaportDas raportDas = hm.computeIfAbsent(key, n -> new RaportDas(n, r.getSkladka()));
+            RaportDas raportDas = hm.computeIfAbsent(key, n -> new RaportDas(
+                    r.getSkladka(),
+                    n
+            ));
+            raportDas.setSkladka(raportDas.getSkladka().add(r.getSkladka()));
+            // raportDas.setNumberOfContract(raportDas.getNumberOfContract() + r.getNumberOfContract());
+        }
+        return new ArrayList<>(hm.values());
+
+    }
+
 }
