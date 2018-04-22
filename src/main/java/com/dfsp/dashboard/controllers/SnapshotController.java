@@ -32,7 +32,8 @@ public class SnapshotController {
     public PageFormSelector addForm(@ModelAttribute PageFormSelector pageFormSelector) {
         PageFormSelector pfs = new PageFormSelector(
                 pageFormSelector.getTitle(),
-                pageFormSelector.getRouterLink()
+                pageFormSelector.getRouterLink(),
+                pageFormSelector.getDbTitle()
         );
         return pageFormSelectorRepository.save(pfs);
     }
@@ -49,6 +50,7 @@ public class SnapshotController {
         resultOptional.ifPresent(result -> {
             result.setTitle(pageFormSelector.getTitle());
             result.setRouterLink(pageFormSelector.getRouterLink());
+            result.setDbTitle(pageFormSelector.getDbTitle());
             pageFormSelectorRepository.save(result);
         });
         return "form id: " + id + " updated!";

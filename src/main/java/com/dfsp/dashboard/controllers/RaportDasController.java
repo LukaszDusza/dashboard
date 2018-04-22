@@ -137,7 +137,7 @@ public class RaportDasController {
     }
 
     @GetMapping("/date/{dateFrom}/{dateTo}/{status}/{distributionChanel}/{salesSector}/{salesSegment}/{salesDirector}/{city}/{manager}/{agent}")
-    public List<RaportDas> getRaportDasSalesFilters(
+    public Set<RaportDas> getRaportDasSalesFilters(
             @PathVariable String dateFrom,
             @PathVariable String dateTo,
             @PathVariable String status,
@@ -174,8 +174,18 @@ public class RaportDasController {
                 manager,
                 agent
          );
+  return collectionIterate(result);
+    }
 
-        return result;
+
+    public Set<RaportDas> collectionIterate(List<RaportDas> result) {
+        Set<RaportDas> targetList = new HashSet<>(result);
+        Iterator iter = targetList.iterator();
+        while (iter.hasNext()) {
+            System.out.println(iter.next());
+        }
+
+        return targetList;
     }
 
 

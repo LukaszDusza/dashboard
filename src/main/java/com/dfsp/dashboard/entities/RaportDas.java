@@ -450,8 +450,55 @@ public class RaportDas {
         this.numberOfContract = numberOfContract;
     }
 
+    @Override
+    public String toString() {
+        return "RaportDas{" +
+                "id=" + id +
+                ", numerKalkulacji=" + numerKalkulacji +
+                ", dataKalkulacji=" + dataKalkulacji +
+                ", numerUmowy=" + numerUmowy +
+                ", dataZawarcia=" + dataZawarcia +
+                ", wazneOd=" + wazneOd +
+                ", wazneDo=" + wazneDo +
+                ", nazwaProduktu='" + nazwaProduktu + '\'' +
+                ", status='" + status + '\'' +
+                ", skladka=" + skladka +
+                ", platnosc='" + platnosc + '\'' +
+                ", nazwaAgenta='" + nazwaAgenta + '\'' +
+                ", nrWewnAgenta='" + nrWewnAgenta + '\'' +
+                ", nrKnfAgenta='" + nrKnfAgenta + '\'' +
+                ", uzytkownik='" + uzytkownik + '\'' +
+                ", nrKnfUzytkownika='" + nrKnfUzytkownika + '\'' +
+                ", emailUzytkownika='" + emailUzytkownika + '\'' +
+                ", aktywny=" + aktywny +
+                ", zablokowany=" + zablokowany +
+                ", poziom1=" + poziom1 +
+                ", kanalDystrybucji='" + kanalDystrybucji + '\'' +
+                ", poziom1KNF='" + poziom1KNF + '\'' +
+                ", poziom2=" + poziom2 +
+                ", nazwaSektoraSprzedazy='" + nazwaSektoraSprzedazy + '\'' +
+                ", poziom2KNF='" + poziom2KNF + '\'' +
+                ", poziom3=" + poziom3 +
+                ", dyrektorSektora='" + dyrektorSektora + '\'' +
+                ", poziom3KNF='" + poziom3KNF + '\'' +
+                ", poziom4=" + poziom4 +
+                ", segmentSprzedazy='" + segmentSprzedazy + '\'' +
+                ", poziom4knf='" + poziom4knf + '\'' +
+                ", poziom5=" + poziom5 +
+                ", drEkspertSegmentu='" + drEkspertSegmentu + '\'' +
+                ", poziom5knf='" + poziom5knf + '\'' +
+                ", poziom6=" + poziom6 +
+                ", miasto='" + miasto + '\'' +
+                ", poziom6knf='" + poziom6knf + '\'' +
+                ", poziom7=" + poziom7 +
+                ", mzaKierownikZespolu='" + mzaKierownikZespolu + '\'' +
+                ", poziom7knf='" + poziom7knf + '\'' +
+                ", numberOfContract=" + numberOfContract +
+                '}';
+    }
 
-//    public String getDataKalkulacji() {
+
+    //    public String getDataKalkulacji() {
 //        return dataKalkulacji;
 //    }
 //

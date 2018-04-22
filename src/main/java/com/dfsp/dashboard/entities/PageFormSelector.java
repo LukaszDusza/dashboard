@@ -14,10 +14,12 @@ public class PageFormSelector {
     private Long id;
     private String title;
     private String routerLink;
+    private String dbTitle;
 
-    public PageFormSelector(String title, String routerLink) {
+    public PageFormSelector(String title, String routerLink, String dbTitle) {
         this.title = title;
         this.routerLink = routerLink;
+        this.dbTitle = dbTitle;
     }
 
     public PageFormSelector() {
@@ -45,5 +47,13 @@ public class PageFormSelector {
 
     public void setRouterLink(String routerLink) {
         this.routerLink = routerLink;
+    }
+
+    public String getDbTitle() {
+        return dbTitle;
+    }
+
+    public void setDbTitle(String dbTitle) {
+        this.dbTitle = dbTitle;
     }
 }
