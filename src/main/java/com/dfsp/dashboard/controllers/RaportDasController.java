@@ -5,13 +5,11 @@ import com.dfsp.dashboard.entities.RaportDas;
 import com.dfsp.dashboard.repositories.RaportDasRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import sun.java2d.pipe.SpanShapeRenderer;
 
+import java.io.*;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @CrossOrigin
@@ -73,11 +71,10 @@ public class RaportDasController {
     }
 
     @GetMapping("/date/{dateFrom}/{dateTo}/{status}")
-    public List<RaportDas> getRaportDasByDateSummary(@PathVariable String dateFrom, @PathVariable String dateTo, @PathVariable String status) {
-
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM d, yyyy", Locale.ENGLISH);
-//        LocalDate dateFromFormat = LocalDate.parse(dateFrom, formatter);
-//        LocalDate dateToFormat = LocalDate.parse(dateTo, formatter);
+    public List<RaportDas> getRaportDasByDateSummary(
+            @PathVariable String dateFrom,
+            @PathVariable String dateTo,
+            @PathVariable String status) {
 
         java.sql.Date dateFromFormat = null;
         java.sql.Date dateToFormat = null;
@@ -136,46 +133,46 @@ public class RaportDasController {
 
     }
 
-    @GetMapping("/date/{dateFrom}/{dateTo}/{status}/{distributionChanel}/{salesSector}/{salesSegment}/{salesDirector}/{city}/{manager}/{agent}")
-    public Set<RaportDas> getRaportDasSalesFilters(
-            @PathVariable String dateFrom,
-            @PathVariable String dateTo,
-            @PathVariable String status,
-            @PathVariable String distributionChanel,
-            @PathVariable String salesSector,
-            @PathVariable String salesSegment,
-            @PathVariable String salesDirector,
-            @PathVariable String city,
-            @PathVariable String manager,
-            @PathVariable String agent
-    ) {
-
-        java.sql.Date dateFromFormat = null;
-        java.sql.Date dateToFormat = null;
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        try {
-            Date parsedFrom = format.parse(dateFrom);
-            Date parsedTo = format.parse(dateTo);
-            dateFromFormat = new java.sql.Date(parsedFrom.getTime());
-            dateToFormat = new java.sql.Date(parsedTo.getTime());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        List<RaportDas> result = raportDasRepository.findByFilterSales3rd(
-                dateFromFormat,
-                dateToFormat,
-                status,
-                distributionChanel,
-                salesSector,
-                salesSegment,
-                salesDirector,
-                city,
-                manager,
-                agent
-         );
-  return collectionIterate(result);
-    }
+//    @GetMapping("/date/{dateFrom}/{dateTo}/{status}/{distributionChanel}/{salesSector}/{salesSegment}/{salesDirector}/{city}/{manager}/{agent}")
+//    public Set<RaportDas> getRaportDasSalesFilters(
+//            @PathVariable String dateFrom,
+//            @PathVariable String dateTo,
+//            @PathVariable String status,
+//            @PathVariable String distributionChanel,
+//            @PathVariable String salesSector,
+//            @PathVariable String salesSegment,
+//            @PathVariable String salesDirector,
+//            @PathVariable String city,
+//            @PathVariable String manager,
+//            @PathVariable String agent
+//    ) {
+//
+//        java.sql.Date dateFromFormat = null;
+//        java.sql.Date dateToFormat = null;
+//        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+//        try {
+//            Date parsedFrom = format.parse(dateFrom);
+//            Date parsedTo = format.parse(dateTo);
+//            dateFromFormat = new java.sql.Date(parsedFrom.getTime());
+//            dateToFormat = new java.sql.Date(parsedTo.getTime());
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//
+//        List<RaportDas> result = raportDasRepository.findByFilterSales3rd(
+//                dateFromFormat,
+//                dateToFormat,
+//                status,
+//                distributionChanel,
+//                salesSector,
+//                salesSegment,
+//                salesDirector,
+//                city,
+//                manager,
+//                agent
+//         );
+//  return collectionIterate(result);
+//    }
 
 
     public Set<RaportDas> collectionIterate(List<RaportDas> result) {
@@ -325,7 +322,165 @@ public class RaportDasController {
             // raportDas.setNumberOfContract(raportDas.getNumberOfContract() + r.getNumberOfContract());
         }
         return new ArrayList<>(hm.values());
+    }
 
+
+    @GetMapping("/date/{dateFrom}/{dateTo}/{status}/{filter}")
+    public List<RaportDas> getReportByFilter(
+            @PathVariable String dateFrom,
+            @PathVariable String dateTo,
+            @PathVariable String status,
+            @PathVariable String filter
+            ) {
+        List<RaportDas> result = raportDasRepository.findByFilter(
+                toSqlDateParser(dateFrom),
+                toSqlDateParser(dateTo),
+                status );
+        Map<String, RaportDas> hm = new LinkedHashMap<>();
+
+        String key;
+        for (RaportDas r : result) {
+
+            switch (filter) {
+                case "distributionchanel":
+                    key = r.getKanalDystrybucji();
+                    break;
+                case "salessector":
+                    key = r.getNazwaSektoraSprzedazy();
+                    break;
+                case "salessegment":
+                    key = r.getSegmentSprzedazy();
+                    break;
+                case "city":
+                    key = r.getMiasto();
+                    break;
+                case "manager":
+                    key = r.getMzaKierownikZespolu();
+                    break;
+                case "agent":
+                    key = r.getNazwaAgenta();
+                    break;
+                default:
+                    key = r.getPlatnosc();
+            }
+            System.out.println(filter);
+            System.out.println(key);
+                    RaportDas raportDas = hm.computeIfAbsent(key, premium -> new RaportDas(
+                            premium,
+                            new BigDecimal(0),
+                            r.getNrWewnAgenta(),
+                            r.getNrKnfAgenta(),
+                            r.getUzytkownik(),
+                            r.getNrKnfUzytkownika(),
+                            r.getKanalDystrybucji(),
+                            r.getPoziom1KNF(),
+                            r.getPoziom2(),
+                            r.getNazwaSektoraSprzedazy(),
+                            r.getPoziom2KNF(),
+                            r.getPoziom3(),
+                            r.getDyrektorSektora(),
+                            r.getPoziom3KNF(),
+                            r.getPoziom4(),
+                            r.getSegmentSprzedazy(),
+                            r.getPoziom4knf(),
+                            r.getPoziom5(),
+                            r.getDrEkspertSegmentu(),
+                            r.getPoziom5knf(),
+                            r.getPoziom6(),
+                            r.getMiasto(),
+                            r.getPoziom6knf(),
+                            r.getPoziom7(),
+                            r.getMzaKierownikZespolu(),
+                            r.getPoziom7knf(),
+                            0
+                    ));
+
+                    raportDas.setSkladka(raportDas.getSkladka().add(r.getSkladka()));
+                    raportDas.setNumberOfContract(raportDas.getNumberOfContract() + r.getNumberOfContract());
+            }
+
+        return new ArrayList<>(hm.values());
+    }
+
+    // =================================== DATE PARSER ===================================
+
+    public java.sql.Date toSqlDateParser(String date) {
+        java.sql.Date result = null;
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date parsedDate = format.parse(date);
+            result = new java.sql.Date(parsedDate.getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+
+    // ================================== RAPORT HEADERS =================================
+
+
+    @GetMapping("/filter/sales/{prop}")
+    public static List<String> headerFilters(@PathVariable String prop) {
+   String input = "src/main/resources/config/filters.properties";
+
+   Map<String, String> result = new HashMap<>();
+
+    try {
+        FileReader fileReader = new FileReader(input);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+        String textLine = bufferedReader.readLine();
+        do {
+            if(textLine != null) {
+                String[] parts = textLine.split("=");
+                result.put(parts[0], parts[1]);
+            }
+            textLine = bufferedReader.readLine();
+        } while(textLine != null);
+        bufferedReader.close();
+
+    } catch (IOException ex) {
+        ex.printStackTrace();
+    }
+
+    switch (prop) {
+        case "key":
+            return new ArrayList<>(result.keySet());
+        case "value":
+            return new ArrayList<>(result.values());
+            default:
+                return new ArrayList<>(Arrays.asList("Error return statement."));
+    }
+}
+
+
+//nie dziala z map po stronie JS
+    @GetMapping("/filter/sales/map")
+    public static Map<String, String> headerFiltersMap() {
+        String input = "src/main/resources/config/filters.properties";
+
+        Map<String, String> result = new HashMap<>();
+
+        try {
+            FileReader fileReader = new FileReader(input);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+            String textLine = bufferedReader.readLine();
+            do {
+                if(textLine != null) {
+                    String[] parts = textLine.split("=");
+                    result.put(parts[0], parts[1]);
+                }
+                textLine = bufferedReader.readLine();
+            } while(textLine != null);
+            bufferedReader.close();
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return result;
     }
 
 }
+

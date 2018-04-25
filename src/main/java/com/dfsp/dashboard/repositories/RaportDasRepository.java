@@ -40,6 +40,21 @@ String REPORT_BY_FILTERS_SALES = "SELECT * FROM raport_das where  raport_das.skl
     @Query(value = REPORT_BY_DATE_STATUS, nativeQuery = true)
     List<RaportDas> findByDateAndStatus(Date dateFrom, Date dateTo, String status);
 
+
+
+    @Async
+    @Query(value = REPORT_BY_FILTER, nativeQuery = true)
+    List<RaportDas> findByFilter(Date dateFrom, Date dateTo, String status);
+    String REPORT_BY_FILTER = "SELECT * FROM raport_das where raport_das.dataZawarcia >= ?1 and raport_das.dataZawarcia <= ?2 and raport_das.status = ?3";
+
+
+
+
+
+
+
+
+
     @Async
     @Query(value = REPORT_BY_FILTERS_SALES, nativeQuery = true)
     List<RaportDas> findByFilterSales2nd(Date dateFrom,
