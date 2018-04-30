@@ -1,6 +1,8 @@
 package com.dfsp.dashboard.controllers;
 
 
+import com.dfsp.dashboard.app.DateParser;
+import com.dfsp.dashboard.app.FilesReader;
 import com.dfsp.dashboard.entities.RaportDas;
 import com.dfsp.dashboard.repositories.RaportDasRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -333,8 +335,8 @@ public class RaportDasController {
             @PathVariable String filter
             ) {
         List<RaportDas> result = raportDasRepository.findByFilter(
-                toSqlDateParser(dateFrom),
-                toSqlDateParser(dateTo),
+                DateParser.toSqlDate(dateFrom),
+                DateParser.toSqlDate(dateTo),
                 status );
         Map<String, RaportDas> hm = new LinkedHashMap<>();
 
@@ -363,8 +365,6 @@ public class RaportDasController {
                 default:
                     key = r.getPlatnosc();
             }
-            System.out.println(filter);
-            System.out.println(key);
                     RaportDas raportDas = hm.computeIfAbsent(key, premium -> new RaportDas(
                             premium,
                             new BigDecimal(0),
@@ -402,84 +402,15 @@ public class RaportDasController {
         return new ArrayList<>(hm.values());
     }
 
-    // =================================== DATE PARSER ===================================
 
-    public java.sql.Date toSqlDateParser(String date) {
-        java.sql.Date result = null;
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        try {
-            Date parsedDate = format.parse(date);
-            result = new java.sql.Date(parsedDate.getTime());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return result;
+    @GetMapping("/filter/sales")
+    public List<RaportDas> headerFilters() {
+     return null;
     }
 
-
-    // ================================== RAPORT HEADERS =================================
-
-
-    @GetMapping("/filter/sales/{prop}")
-    public static List<String> headerFilters(@PathVariable String prop) {
-   String input = "src/main/resources/config/filters.properties";
-
-   Map<String, String> result = new HashMap<>();
-
-    try {
-        FileReader fileReader = new FileReader(input);
-        BufferedReader bufferedReader = new BufferedReader(fileReader);
-
-        String textLine = bufferedReader.readLine();
-        do {
-            if(textLine != null) {
-                String[] parts = textLine.split("=");
-                result.put(parts[0], parts[1]);
-            }
-            textLine = bufferedReader.readLine();
-        } while(textLine != null);
-        bufferedReader.close();
-
-    } catch (IOException ex) {
-        ex.printStackTrace();
-    }
-
-    switch (prop) {
-        case "key":
-            return new ArrayList<>(result.keySet());
-        case "value":
-            return new ArrayList<>(result.values());
-            default:
-                return new ArrayList<>(Arrays.asList("Error return statement."));
-    }
-}
-
-
-//nie dziala z map po stronie JS
-    @GetMapping("/filter/sales/map")
-    public static Map<String, String> headerFiltersMap() {
-        String input = "src/main/resources/config/filters.properties";
-
-        Map<String, String> result = new HashMap<>();
-
-        try {
-            FileReader fileReader = new FileReader(input);
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
-
-            String textLine = bufferedReader.readLine();
-            do {
-                if(textLine != null) {
-                    String[] parts = textLine.split("=");
-                    result.put(parts[0], parts[1]);
-                }
-                textLine = bufferedReader.readLine();
-            } while(textLine != null);
-            bufferedReader.close();
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        return result;
+    @GetMapping("/lang/{lang}")
+    public Map<String, String> lang(@PathVariable String lang) {
+       return new FilesReader().readLangfile("dictionary",lang);
     }
 
 }

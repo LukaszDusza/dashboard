@@ -452,7 +452,7 @@ public class RaportDas {
 
     @Override
     public String toString() {
-        return "RaportDas{" +
+        return "RaportDas {" +
                 "id=" + id +
                 ", numerKalkulacji=" + numerKalkulacji +
                 ", dataKalkulacji=" + dataKalkulacji +

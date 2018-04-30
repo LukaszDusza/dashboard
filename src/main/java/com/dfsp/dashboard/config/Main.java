@@ -1,14 +1,14 @@
 package com.dfsp.dashboard.config;
 
-import com.dfsp.dashboard.controllers.RaportDasController;
-
-import java.util.Map;
+import com.dfsp.dashboard.app.FilesReader;
 
 public class Main {
 
     public static void main(String[] args) {
-        for (String entry: RaportDasController.headerFilters("value")) {
-            System.out.println(entry);
+
+        System.out.println(new FilesReader().readLangfile("dictionary","pol"));
+
         }
+
     }
-}
+
