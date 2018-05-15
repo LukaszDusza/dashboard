@@ -402,7 +402,6 @@ public class RaportDasController {
         return new ArrayList<>(hm.values());
     }
 
-
     @GetMapping("/filter/sales")
     public List<RaportDas> headerFilters() {
      return null;
@@ -413,5 +412,11 @@ public class RaportDasController {
        return new FilesReader().readLangfile("dictionary",lang);
     }
 
+
+
+    @GetMapping("/file/{name}")
+    public List <Map<String,String>> getFile(@PathVariable String name) {
+        return new FilesReader().csvParser(name);
+    }
 }
 
