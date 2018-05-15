@@ -9,18 +9,15 @@ import java.sql.Date;
 
 @Entity
 @Table(name = "raport_das")
-public class RaportDas {
+public class ReportDas {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private Long numerKalkulacji;
-
     //@Type(type="date")
     private Date dataKalkulacji;
-
     private  int numerUmowy;
-
    // @Type(type="date")
     private  Date dataZawarcia;
     private  Date wazneOd;
@@ -60,37 +57,53 @@ public class RaportDas {
     private String poziom7knf;
     private int numberOfContract;
 
-    public RaportDas() {
+    public ReportDas() { }
 
-    }
-
-//    public RaportDas(String nazwaAgenta, BigDecimal skladka) {
-//        this.nazwaAgenta = nazwaAgenta;
-//        this.skladka = skladka;
-//    }
-
-//    public RaportDas(String nazwaAgenta, BigDecimal skladka) {
-//        this.nazwaAgenta = nazwaAgenta;
-//        this.skladka = skladka;
-//    }
-
-    public RaportDas(String platnosc, BigDecimal skladka) {
+    public ReportDas(String platnosc, BigDecimal skladka) {
         this.platnosc = platnosc;
         this.skladka = skladka;
     }
 
-    public RaportDas(BigDecimal skladka, String segmentSprzedazy) {
+    public ReportDas(BigDecimal skladka, String segmentSprzedazy) {
         this.skladka = skladka;
         this.segmentSprzedazy = segmentSprzedazy;
     }
 
-    public RaportDas(String nazwaProduktu, BigDecimal skladka, int numberOfContract) {
+    public ReportDas(String nazwaProduktu, BigDecimal skladka, int numberOfContract) {
         this.nazwaProduktu = nazwaProduktu;
         this.skladka = skladka;
         this.numberOfContract = numberOfContract;
     }
 
-    public RaportDas(String nazwaAgenta,BigDecimal skladka, String nrWewnAgenta, String nrKnfAgenta, String uzytkownik, String nrKnfUzytkownika, String kanalDystrybucji, String poziom1KNF, int poziom2, String nazwaSektoraSprzedazy, String poziom2KNF, int poziom3, String dyrektorSektora, String poziom3KNF, int poziom4, String segmentSprzedazy, String poziom4knf, int poziom5, String drEkspertSegmentu, String poziom5knf, int poziom6, String miasto, String poziom6knf, int poziom7, String mzaKierownikZespolu, String poziom7knf, int numberOfContract) {
+    public ReportDas(
+            String nazwaAgenta,
+            BigDecimal skladka,
+            String nrWewnAgenta,
+            String nrKnfAgenta,
+            String uzytkownik,
+            String nrKnfUzytkownika,
+            String kanalDystrybucji,
+            String poziom1KNF,
+            int poziom2,
+            String nazwaSektoraSprzedazy,
+            String poziom2KNF,
+            int poziom3,
+            String dyrektorSektora,
+            String poziom3KNF,
+            int poziom4,
+            String segmentSprzedazy,
+            String poziom4knf,
+            int poziom5,
+            String drEkspertSegmentu,
+            String poziom5knf,
+            int poziom6,
+            String miasto,
+            String poziom6knf,
+            int poziom7,
+            String mzaKierownikZespolu,
+            String poziom7knf,
+            int numberOfContract ) {
+
         this.nazwaAgenta = nazwaAgenta;
         this.skladka = skladka;
         this.nrWewnAgenta = nrWewnAgenta;
@@ -121,6 +134,48 @@ public class RaportDas {
     }
 
 
+    public ReportDas(Long numerKalkulacji, Date dataKalkulacji, int numerUmowy, Date dataZawarcia, Date wazneOd, Date wazneDo, String nazwaProduktu, String status, BigDecimal skladka, String platnosc, String nazwaAgenta, String nrWewnAgenta, String nrKnfAgenta, String uzytkownik, String nrKnfUzytkownika, String emailUzytkownika, byte aktywny, byte zablokowany, int poziom1, String kanalDystrybucji, String poziom1KNF, int poziom2, String nazwaSektoraSprzedazy, String poziom2KNF, int poziom3, String dyrektorSektora, String poziom3KNF, int poziom4, String segmentSprzedazy, String poziom4knf, int poziom5, String drEkspertSegmentu, String poziom5knf, int poziom6, String miasto, String poziom6knf, int poziom7, String mzaKierownikZespolu, String poziom7knf, int numberOfContract) {
+        this.numerKalkulacji = numerKalkulacji;
+        this.dataKalkulacji = dataKalkulacji;
+        this.numerUmowy = numerUmowy;
+        this.dataZawarcia = dataZawarcia;
+        this.wazneOd = wazneOd;
+        this.wazneDo = wazneDo;
+        this.nazwaProduktu = nazwaProduktu;
+        this.status = status;
+        this.skladka = skladka;
+        this.platnosc = platnosc;
+        this.nazwaAgenta = nazwaAgenta;
+        this.nrWewnAgenta = nrWewnAgenta;
+        this.nrKnfAgenta = nrKnfAgenta;
+        this.uzytkownik = uzytkownik;
+        this.nrKnfUzytkownika = nrKnfUzytkownika;
+        this.emailUzytkownika = emailUzytkownika;
+        this.aktywny = aktywny;
+        this.zablokowany = zablokowany;
+        this.poziom1 = poziom1;
+        this.kanalDystrybucji = kanalDystrybucji;
+        this.poziom1KNF = poziom1KNF;
+        this.poziom2 = poziom2;
+        this.nazwaSektoraSprzedazy = nazwaSektoraSprzedazy;
+        this.poziom2KNF = poziom2KNF;
+        this.poziom3 = poziom3;
+        this.dyrektorSektora = dyrektorSektora;
+        this.poziom3KNF = poziom3KNF;
+        this.poziom4 = poziom4;
+        this.segmentSprzedazy = segmentSprzedazy;
+        this.poziom4knf = poziom4knf;
+        this.poziom5 = poziom5;
+        this.drEkspertSegmentu = drEkspertSegmentu;
+        this.poziom5knf = poziom5knf;
+        this.poziom6 = poziom6;
+        this.miasto = miasto;
+        this.poziom6knf = poziom6knf;
+        this.poziom7 = poziom7;
+        this.mzaKierownikZespolu = mzaKierownikZespolu;
+        this.poziom7knf = poziom7knf;
+        this.numberOfContract = numberOfContract;
+    }
 
     public Long getId() {
         return id;
@@ -452,7 +507,7 @@ public class RaportDas {
 
     @Override
     public String toString() {
-        return "RaportDas {" +
+        return "ReportDas {" +
                 "id=" + id +
                 ", numerKalkulacji=" + numerKalkulacji +
                 ", dataKalkulacji=" + dataKalkulacji +
@@ -497,22 +552,6 @@ public class RaportDas {
                 '}';
     }
 
-
-    //    public String getDataKalkulacji() {
-//        return dataKalkulacji;
-//    }
-//
-//    public void setDataKalkulacji(String dataKalkulacji) {
-//        this.dataKalkulacji = dataKalkulacji;
-//    }
-//
-//    public String getDataZawarcia() {
-//        return dataZawarcia;
-//    }
-//
-//    public void setDataZawarcia(String dataZawarcia) {
-//        this.dataZawarcia = dataZawarcia;
-//    }
 }
 
 
