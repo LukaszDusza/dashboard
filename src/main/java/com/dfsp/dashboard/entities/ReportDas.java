@@ -1,8 +1,6 @@
 package com.dfsp.dashboard.entities;
 
 
-import org.hibernate.annotations.Type;
-
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Date;

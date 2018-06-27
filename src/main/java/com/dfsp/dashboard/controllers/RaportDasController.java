@@ -4,32 +4,36 @@ package com.dfsp.dashboard.controllers;
 import com.dfsp.dashboard.app.DateParser;
 import com.dfsp.dashboard.app.FilesReader;
 import com.dfsp.dashboard.app.MyInvoker;
+import com.dfsp.dashboard.dtos.RaportDasDto;
 import com.dfsp.dashboard.entities.ReportDas;
 import com.dfsp.dashboard.repositories.RaportDasRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @CrossOrigin
 @RestController
 @RequestMapping("/api/raportdas")
 public class RaportDasController {
 
-    private List<ControllersList> endpoints = new ArrayList<>();
-
     @Autowired
     RaportDasRepository raportDasRepository;
+
 
     @GetMapping("/all")
     public List<ReportDas> getRaportDasAll() {
         return raportDasRepository.findAll();
     }
+
 
     @GetMapping("/usersum")
     public List<ReportDas> getReportDasByUser() {
@@ -439,6 +443,8 @@ public class RaportDasController {
         return new ArrayList<>(hm.values());
     }
 
+
+
     @GetMapping("/filter/sales")
     public List<ReportDas> headerFilters() {
      return null;
@@ -449,11 +455,11 @@ public class RaportDasController {
        return new FilesReader().readLangfile("dictionary",lang);
     }
 
-
-
     @GetMapping("/file/{name}")
     public List <Map<String,String>> getFile(@PathVariable String name) {
         return new FilesReader().csvParser(name);
     }
+
+
 }
 
