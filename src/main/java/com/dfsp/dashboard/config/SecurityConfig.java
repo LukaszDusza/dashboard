@@ -24,7 +24,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     //.and()
 
             /*ENABLE AUTH*/
-                   // .anyRequest() //zamist tergo co na powyzej
+                   // .anyRequest() //zamist tego co na powyzej
                    // .authenticated() //zamist tego co powyzej
                     //.and() //nie potrzebne gdy gora odkomentowana
                     //.formLogin();

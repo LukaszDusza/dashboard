@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @CrossOrigin
-@RestController
+@RestController //połączenie @Controller and @ResponseBody
 @RequestMapping("/api/")
 public class RaportDasDtoController {
 
