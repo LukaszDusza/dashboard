@@ -15,17 +15,17 @@ public class RaportDasDto {
     private Date dataKalkulacji;
     private Date dataZawarcia;
     private String nazwaProduktu;
-    private String status;
+    private String statusUmowy;
     private BigDecimal skladka;
     private String platnosc;
-    private String nazwaAgenta;
+    private String agent;
     private String uzytkownik;
     private String kanalDystrybucji;
     private String nazwaSektoraSprzedazy;
     private String dyrektorSektora;
     private String segmentSprzedazy;
-    private String drEkspertSegmentu;
+    private String dyrektorSegmentu;
     private String miasto;
-    private String mzaKierownikZespolu;
+    private String kierownikZespolu;
 
 }
