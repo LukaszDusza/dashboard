@@ -1,8 +1,7 @@
 package com.dfsp.dashboard.repositories;
 
 
-import com.dfsp.dashboard.dtos.RaportDasDto;
-import com.dfsp.dashboard.entities.ReportDas;
+import com.dfsp.dashboard.entities.RaportTotal;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -16,7 +15,7 @@ import java.util.List;
 
 @Transactional
 @Repository
-public interface RaportDasRepository extends JpaRepository<ReportDas, Long>, JpaSpecificationExecutor<ReportDas> {
+public interface RaportDasRepository extends JpaRepository<RaportTotal, Long>, JpaSpecificationExecutor<RaportTotal> {
 
     String REPORT_BY_DATE = "SELECT * FROM raport_das WHERE raport_das.datazawarcia BETWEEN ?1 AND ?2";
  //   String REPORT_BY_DATE_STATUS = "SELECT * FROM raport_das where raport_das.dataZawarcia >= '?1' and raport_das.dataZawarcia <= '?2' and raport_das.status = '?3'";
@@ -26,33 +25,33 @@ public interface RaportDasRepository extends JpaRepository<ReportDas, Long>, Jpa
 String REPORT_BY_FILTERS_SALES = "SELECT * FROM raport_das where  raport_das.skladka  >= 0 and raport_das.skladka <= 1000 and raport_das.miasto  Like '%' and raport_das.status = 'umowa'";
 //    @Async
 //    @Query(value = REPORT_BY_DATE, nativeQuery = true)
-//    List<ReportDas> findByDate(String dateFrom, String dateTo);
+//    List<RaportTotal> findByDate(String dateFrom, String dateTo);
 
     @Async
     @Query(value = REPORT_BY_DATE, nativeQuery = true)
-    List<ReportDas> findByDate(Date dateFrom, Date dateTo);
+    List<RaportTotal> findByDate(Date dateFrom, Date dateTo);
 
 
-    String RAPORT_BY_PROPERTIES = "SELECT * FROM raport_das WHERE" +
-            " raport_das.datazawarcia BETWEEN ?1 AND ?2" +
-            " AND raport_das.nazwaagenta like (?3%)" +
-            " AND raport_das.drekspertsegmentu like ?4%" +
-            " AND raport_das.dyrektorsektora like ?5%" +
-            " AND raport_das.kanaldystrybucji like ?6%" +
-            " AND raport_das.mzakierownikZespolu like ?7%" +
-            " AND raport_das.miasto like ?8%" +
-            " AND raport_das.nazwaproduktu like ?9%" +
-            " AND raport_das.nazwasektorasprzedazy like ?10%" +
-            " AND raport_das.platnosc like ?11%" +
-            " AND raport_das.segmentsprzedazy like ?12%" +
-            " AND raport_das.skladka >= ?13" +
-            " AND raport_das.skladka <= ?14" +
-            " AND raport_das.status like ?15%" +
-            " AND raport_das.uzytkownik like ?16%";
+    String RAPORT_BY_PROPERTIES = "SELECT * FROM raport_test WHERE" +
+            " raport_test.data_zawarcia BETWEEN ?1 AND ?2" +
+            " AND raport_test.nazwa_agenta like (?3%)" +
+            " AND raport_test.dyrektor_ekspert_segmentu like ?4%" +
+            " AND raport_test.dyrektor_sektora like ?5%" +
+            " AND raport_test.kanal_dystrybucji like ?6%" +
+            " AND raport_test.mza_kierownik_zespolu like ?7%" +
+            " AND raport_test.nr_zespolu_sprzedazy_miasto like ?8%" +
+            " AND raport_test.nazwa_produktu like ?9%" +
+            " AND raport_test.nazwa_sektora_sprzedazy like ?10%" +
+            " AND raport_test.platnosc like ?11%" +
+            " AND raport_test.nazwa_segmentu_sprzedazy like ?12%" +
+            " AND raport_test.skladka >= ?13" +
+            " AND raport_test.skladka <= ?14" +
+            " AND raport_test.status like ?15%" +
+            " AND raport_test.uzytkownik like ?16%";
 
     @Async
     @Query(value = RAPORT_BY_PROPERTIES, nativeQuery = true)
-    List<ReportDas> raportByDateAndProperties(
+    List<RaportTotal> raportByDateAndProperties(
             Date dateFrom,
             Date dateTo,
             String agent,
@@ -74,31 +73,31 @@ String REPORT_BY_FILTERS_SALES = "SELECT * FROM raport_das where  raport_das.skl
 
 //    @Async
 //    @Query(value = REPORT_BY_DATE_STATUS, nativeQuery = true)
-//    List<ReportDas> findByDateAndStatus(String dateFrom, String dateTo, String status);
+//    List<RaportTotal> findByDateAndStatus(String dateFrom, String dateTo, String status);
 
     @Async
     @Query(value = REPORT_BY_DATE_STATUS, nativeQuery = true)
-    List<ReportDas> findByDateAndStatus(Date dateFrom, Date dateTo, String status);
+    List<RaportTotal> findByDateAndStatus(Date dateFrom, Date dateTo, String status);
 
 
 
     @Async
     @Query(value = REPORT_BY_FILTER, nativeQuery = true)
-    List<ReportDas> findByFilter(Date dateFrom, Date dateTo, String status);
+    List<RaportTotal> findByFilter(Date dateFrom, Date dateTo, String status);
     String REPORT_BY_FILTER = "SELECT * FROM raport_das where raport_das.dataZawarcia >= ?1 and raport_das.dataZawarcia <= ?2 and raport_das.status = ?3";
 
 
     @Async
     @Query(value = REPORT_BY_FILTERS_SALES, nativeQuery = true)
-    List<ReportDas> findByFilterSales2nd(Date dateFrom,
-                                         Date dateTo,
-                                         String status,
-                                         String businessLine,
-                                         String productLine,
-                                         String product,
-                                         String personType,
-                                         String  paymentMode,
-                                         String  paymentMethod
+    List<RaportTotal> findByFilterSales2nd(Date dateFrom,
+                                           Date dateTo,
+                                           String status,
+                                           String businessLine,
+                                           String productLine,
+                                           String product,
+                                           String personType,
+                                           String  paymentMode,
+                                           String  paymentMethod
 
             );
 
@@ -117,16 +116,16 @@ String REPORT_BY_FILTERS_SALES = "SELECT * FROM raport_das where  raport_das.skl
 
     @Async
     @Query(value = REPORT_BY_FILTERS,nativeQuery = true)
-    List<ReportDas> findByFilterSales3rd(Date dateFrom,
-                                         Date dateTo,
-                                         String status,
-                                         String distributionChanel,
-                                         String  salesSector,
-                                         String  salesSegment,
-                                         String  salesDirector,
-                                         String  city,
-                                         String  manager,
-                                         String  agent
+    List<RaportTotal> findByFilterSales3rd(Date dateFrom,
+                                           Date dateTo,
+                                           String status,
+                                           String distributionChanel,
+                                           String  salesSector,
+                                           String  salesSegment,
+                                           String  salesDirector,
+                                           String  city,
+                                           String  manager,
+                                           String  agent
     );
 
 

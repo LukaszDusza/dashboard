@@ -1,13 +1,8 @@
 package com.dfsp.dashboard.app;
 
-import com.dfsp.dashboard.entities.ReportDas;
+import com.dfsp.dashboard.entities.RaportTotal;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.math.BigDecimal;
-
-public class MyInvoker extends ReportDas {
+public class MyInvoker extends RaportTotal {
 
 
 //    public static Method getMethodFromClass (String className, String methodName ) {
@@ -51,7 +46,7 @@ public class MyInvoker extends ReportDas {
 //    }
 //
 //    //todo pobieranie metod z klasy i towrzenie nowego obiektu automatycznie. nieskonczone
-//    public static ReportDas newObject(ReportDas r, String s) {
+//    public static RaportTotal newObject(RaportTotal r, String s) {
 //
 //    //     Method[] methods = getMethodsTableFromClass(className);
 //        //    try {
@@ -61,7 +56,7 @@ public class MyInvoker extends ReportDas {
 //        //    } catch (InvocationTargetException e) {
 //        //       e.printStackTrace();
 //        //    }
-//        return  new ReportDas(
+//        return  new RaportTotal(
 //                s,
 //                new BigDecimal(0),
 //                r.getNrWewnAgenta(),

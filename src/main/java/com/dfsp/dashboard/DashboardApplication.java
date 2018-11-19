@@ -2,19 +2,26 @@ package com.dfsp.dashboard;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 @SpringBootApplication
 public class DashboardApplication {
 
-	//	static public final String PATH = "http://89.67.4.242:11780/dashboard-rest/";
-
-//	@Override
-//	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-//		return application.sources(DashboardApplication.class);
-//	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(DashboardApplication.class, args);
 	}
+
+	@Bean
+	public PasswordEncoder bCryptPasswordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+
+//	@Bean
+//	public CommonsMultipartResolver filterMultipartResolver(){
+//		return new CommonsMultipartResolver();
+//	}
 }

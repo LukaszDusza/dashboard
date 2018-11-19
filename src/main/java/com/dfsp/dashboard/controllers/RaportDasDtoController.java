@@ -4,42 +4,41 @@ package com.dfsp.dashboard.controllers;
 import com.dfsp.dashboard.app.DateParser;
 import com.dfsp.dashboard.dtos.Properties;
 import com.dfsp.dashboard.dtos.RaportDasDto;
-import com.dfsp.dashboard.entities.ReportDas;
+import com.dfsp.dashboard.entities.RaportTotal;
 import com.dfsp.dashboard.repositories.RaportDasRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.math.BigDecimal;
-import java.security.Principal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @CrossOrigin
-@RestController //połączenie @Controller and @ResponseBody
+@RestController
 @RequestMapping("/api/")
 public class RaportDasDtoController {
 
-    @Autowired
+
     RaportDasRepository raportDasRepository;
+
+    public RaportDasDtoController(RaportDasRepository raportDasRepository) {
+        this.raportDasRepository = raportDasRepository;
+    }
+
 
     //  @GetMapping("all")
     public List<RaportDasDto> getRaportDasDtoAll() {
-        List<ReportDas> results = raportDasRepository.findAll();
-        //     List<ReportDas> results = byDate(dateFrom, dateTo);
+        List<RaportTotal> results = raportDasRepository.findAll();
+        //     List<RaportTotal> results = byDate(dateFrom, dateTo);
         ModelMapper modelMapper = new ModelMapper();
         List<RaportDasDto> dtos = new ArrayList<>();
-        for (ReportDas r : results) {
+        for (RaportTotal r : results) {
             RaportDasDto raportDasDto = new RaportDasDto();
             modelMapper.map(r, raportDasDto);
             dtos.add(raportDasDto);
@@ -244,8 +243,8 @@ public class RaportDasDtoController {
         return result;
     }
 
-    public List<ReportDas> byDate(String dateFrom, String dateTo) {
-        List<ReportDas> listByDates = raportDasRepository.findByDate(
+    public List<RaportTotal> byDate(String dateFrom, String dateTo) {
+        List<RaportTotal> listByDates = raportDasRepository.findByDate(
                 DateParser.toSqlDate(dateFrom),
                 DateParser.toSqlDate(dateTo));
         return listByDates;
@@ -264,13 +263,13 @@ public class RaportDasDtoController {
             dateFrom = "1900-01-01";
         }
 
-        List<ReportDas> results = raportDasRepository.findByDate(
+        List<RaportTotal> results = raportDasRepository.findByDate(
                 DateParser.toSqlDate(dateFrom),
                 DateParser.toSqlDate(dateTo));
 
         ModelMapper modelMapper = new ModelMapper();
         List<RaportDasDto> dtos = new ArrayList<>();
-        for (ReportDas r : results) {
+        for (RaportTotal r : results) {
             RaportDasDto raportDasDto = new RaportDasDto();
             modelMapper.map(r, raportDasDto);
             dtos.add(raportDasDto);
@@ -282,7 +281,7 @@ public class RaportDasDtoController {
     public ResponseEntity findByProp(@Valid @RequestBody Properties properties) {
         System.out.println(properties);
 
-        List<ReportDas> result = findByDateAndProperties(
+        List<RaportTotal> result = findByDateAndProperties(
 
                 properties.getDateFrom(),
                 properties.getDateTo(),
@@ -306,7 +305,7 @@ public class RaportDasDtoController {
     }
 
     @GetMapping("raport/stat")
-    public List<ReportDas> findByDateAndProperties(
+    public List<RaportTotal> findByDateAndProperties(
             @RequestParam(value = "dateFrom", required = false) String dateFrom,
             @RequestParam(value = "dateTo", required = false) String dateTo,
             @RequestParam(value = "agent", required = false) String agent,
@@ -397,7 +396,7 @@ public class RaportDasDtoController {
         }
 
 
-        List<ReportDas> results = raportDasRepository.raportByDateAndProperties(
+        List<RaportTotal> results = raportDasRepository.raportByDateAndProperties(
                 DateParser.toSqlDate(dateFrom),
                 DateParser.toSqlDate(dateTo),
                 agent,
@@ -419,7 +418,7 @@ public class RaportDasDtoController {
         //   ModelMapper modelMapper = new ModelMapper();
         //   List<RaportDasDto> dtos = new ArrayList<>();
 
-        //  for (ReportDas r : results) {
+        //  for (RaportTotal r : results) {
         //      RaportDasDto raportDasDto = new RaportDasDto();
         //     modelMapper.map(r, raportDasDto);
         //     dtos.add(raportDasDto);
