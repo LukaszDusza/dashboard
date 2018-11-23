@@ -42,8 +42,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
-              //  .anyRequest().authenticated();
-                .anyRequest().permitAll();
+                .anyRequest().authenticated();
+              //  .anyRequest().permitAll();
 
         http
                 .headers()
@@ -62,34 +62,34 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-
-        web
-                .ignoring()
-                .antMatchers(
-                        HttpMethod.POST,
-                        SIGN_UP_URL
-                )
-
-                // allow anonymous resource requests
-                .and()
-                .ignoring()
-                .antMatchers(
-                        //   HttpMethod.GET,
-                        "/",
-                        "/*.html",
-                        "/favicon.ico",
-                        "/**/*.html"
-                        //   "/**/*.css",
-                        //   "/**/*.js"
-                )
-
-                // Un-secure H2 Database (for testing purposes, H2 console shouldn't be unprotected in production)
-                .and()
-                .ignoring()
-                .antMatchers("/h2-console/**/**");
-    }
+//    @Override
+//    public void configure(WebSecurity web) throws Exception {
+//
+//        web
+//                .ignoring()
+//                .antMatchers(
+//                        HttpMethod.POST,
+//                        SIGN_UP_URL
+//                )
+//
+//                // allow anonymous resource requests
+//                .and()
+//                .ignoring()
+//                .antMatchers(
+//                        //   HttpMethod.GET,
+//                        "/",
+//                        "/*.html",
+//                        "/favicon.ico",
+//                        "/**/*.html"
+//                        //   "/**/*.css",
+//                        //   "/**/*.js"
+//                )
+//
+//                // Un-secure H2 Database (for testing purposes, H2 console shouldn't be unprotected in production)
+//                .and()
+//                .ignoring()
+//                .antMatchers("/h2-console/**/**");
+//    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {

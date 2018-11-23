@@ -20,3 +20,5 @@ create unique index auth_unique_index
 
 CREATE SEQUENCE user_id_seq;
 CREATE SEQUENCE authorities_id_seq;
+
+select * from users where (select user_id = 1 from authorities);

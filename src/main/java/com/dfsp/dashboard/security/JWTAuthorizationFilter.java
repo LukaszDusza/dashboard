@@ -33,6 +33,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
         String header = request.getHeader(Constans.AUTH_HEADER);
 
+
         getHeadersInfo(request);
 
         if (header == null || !header.startsWith(Constans.TOKEN_PREFIX)) {
@@ -47,7 +48,6 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
         }
 
     }
-
 
 
     //private method //decompile token

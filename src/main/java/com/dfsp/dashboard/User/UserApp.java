@@ -22,5 +22,7 @@ public class UserApp {
     private String password;
     private int enabled = 1;
 
+
+
 }
 

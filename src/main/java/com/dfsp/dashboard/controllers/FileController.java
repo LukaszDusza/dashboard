@@ -10,6 +10,7 @@ import org.apache.poi.ss.usermodel.*;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
@@ -29,10 +30,19 @@ import java.util.stream.Collectors;
 @RequestMapping("/files/")
 public class FileController {
 
-    private static String UPLOADED_FOLDER = new File("").getAbsolutePath() + "//uploads//";
+    private ServletContext servletContext;
+
+  //  private String uploads = new File("").getAbsolutePath() + "//uploads//";
+    private String uploads;
+
+    public FileController(ServletContext servletContext) {
+        this.servletContext = servletContext;
+        createDirectory();
+    }
 
     @GetMapping("download")
     public void downloadFile(@RequestParam String filename, HttpServletResponse response) throws IOException {
+
         response.setContentType("application/octet-stream");
         response.setHeader("Content-Disposition", "attachment;filename=" + filename);
         response.setStatus(HttpServletResponse.SC_OK);
@@ -44,7 +54,9 @@ public class FileController {
 
 
     public void createDirectory() {
-        Path path = Paths.get(UPLOADED_FOLDER);
+        uploads = servletContext.getRealPath("/uploads/");
+        System.out.println(uploads);
+        Path path = Paths.get(uploads);
         //if directory exists?
         if (!Files.exists(path)) {
             try {
@@ -59,10 +71,8 @@ public class FileController {
     @GetMapping("list")
     public List<MyFile> getResources() {
 
-        createDirectory();
-
         try {
-            List<MyFile> files = Files.walk(Paths.get(UPLOADED_FOLDER))
+            List<MyFile> files = Files.walk(Paths.get(uploads))
                     .filter(Files::isRegularFile)
                     .map(f -> {
                         try {
@@ -86,7 +96,7 @@ public class FileController {
     @DeleteMapping("delete/{file}")
     public void delete(@PathVariable("file") String fileName) {
 
-        File file = new File(UPLOADED_FOLDER + fileName);
+        File file = new File(uploads + fileName);
         if (file.exists()) {
             file.delete();
         }
@@ -169,13 +179,16 @@ public class FileController {
 
 
         long time = System.currentTimeMillis();
-        String file = UPLOADED_FOLDER + "raport" + time + ".xls";
+        String file = uploads + "raport" + time + ".xls";
 
         try {
             createDirectory();
             byte[] bytes = workbook.getBytes();
             Path path = Paths.get(file);
-            Files.write(path, bytes);
+          //  Files.write(path, bytes);
+
+
+            workbook.write(new File(file));
 
             workbook.close();
 
@@ -183,8 +196,8 @@ public class FileController {
             e.printStackTrace();
         }
 
-        File newFile = new File(UPLOADED_FOLDER + file);
-        return new MyFile(newFile.getName(), file, "");
+        File newFile = new File(uploads + file);
+        return new MyFile(newFile.getName(), file);
 
     }
 
