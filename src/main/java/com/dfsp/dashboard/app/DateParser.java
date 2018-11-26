@@ -6,15 +6,13 @@ import java.util.Date;
 
 public class DateParser {
 
-    public static java.sql.Date toSqlDate(String date) {
-        java.sql.Date result = null;
+    public static java.sql.Date toSqlDate(String date) throws ParseException {
+
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        try {
-            Date parsedDate = format.parse(date);
-            result = new java.sql.Date(parsedDate.getTime());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return result;
+
+        Date parsedDate = format.parse(date);
+
+        return new java.sql.Date(parsedDate.getTime());
+
     }
 }

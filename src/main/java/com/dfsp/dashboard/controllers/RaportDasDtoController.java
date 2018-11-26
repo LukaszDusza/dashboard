@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -25,7 +26,7 @@ import java.util.stream.Collectors;
 public class RaportDasDtoController {
 
 
-    RaportDasRepository raportDasRepository;
+    private RaportDasRepository raportDasRepository;
 
     public RaportDasDtoController(RaportDasRepository raportDasRepository) {
         this.raportDasRepository = raportDasRepository;
@@ -243,7 +244,7 @@ public class RaportDasDtoController {
         return result;
     }
 
-    public List<RaportTotal> byDate(String dateFrom, String dateTo) {
+    public List<RaportTotal> byDate(String dateFrom, String dateTo) throws ParseException {
         List<RaportTotal> listByDates = raportDasRepository.findByDate(
                 DateParser.toSqlDate(dateFrom),
                 DateParser.toSqlDate(dateTo));
@@ -251,7 +252,7 @@ public class RaportDasDtoController {
     }
 
     @GetMapping("raport")
-    public List<RaportDasDto> findByDateRaportDasDto(@RequestParam(value = "dateFrom", required = false) String dateFrom, @RequestParam(value = "dateTo", required = false) String dateTo) {
+    public List<RaportDasDto> findByDateRaportDasDto(@RequestParam(value = "dateFrom", required = false) String dateFrom, @RequestParam(value = "dateTo", required = false) String dateTo) throws ParseException {
 
         if ((dateTo == null) || (dateTo.equals("")) || (dateTo.equals(" "))) {
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -278,7 +279,7 @@ public class RaportDasDtoController {
     }
 
     @PostMapping("raport/stat")
-    public ResponseEntity findByProp(@Valid @RequestBody Properties properties) {
+    public ResponseEntity findByProp(@Valid @RequestBody Properties properties) throws ParseException {
         System.out.println(properties);
 
         List<RaportTotal> result = findByDateAndProperties(
@@ -321,7 +322,7 @@ public class RaportDasDtoController {
             @RequestParam(value = "fromAmount", required = false) BigDecimal fromAmount,
             @RequestParam(value = "toAmount", required = false) BigDecimal toAmount,
             @RequestParam(value = "statusUmowy", required = false) String statusUmowy,
-            @RequestParam(value = "uzytkownik", required = false) String uzytkownik) {
+            @RequestParam(value = "uzytkownik", required = false) String uzytkownik) throws ParseException {
 
         if (fromAmount == null) {
             fromAmount = new BigDecimal(0.00);

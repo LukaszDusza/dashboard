@@ -9,10 +9,8 @@ import java.io.BufferedReader;
 import java.util.List;
 import java.util.ArrayList;
 
-/*
- * @Author Jay Sridhar
- */
 public class CSV
+
 {
     static final private int NUMMARK = 10;
     static final private char COMMA = ',';
@@ -31,14 +29,14 @@ public class CSV
     /**
      * What should be used as the separator character?
      */
+
     private char separator;
     private ArrayList<String> fields;
     private boolean eofSeen;
     private Reader in;
 
-    static public Reader stripBom(InputStream in)
-            throws java.io.IOException,
-            java.io.UnsupportedEncodingException
+    static public Reader stripBom(InputStream in) throws java.io.IOException
+
     {
         PushbackInputStream pin = new PushbackInputStream(in, 3);
         byte[] b = new byte[3];

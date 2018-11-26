@@ -142,10 +142,56 @@ public class RaportTotal {
     @Column(name = "telefon_uzytkownika")
     private String telefonUzytkownika;
 
- //   @Column(name = "")
- //   private int numberOfContract;
+    //   @Column(name = "")
+    //   private int numberOfContract;
 
 
+    public RaportTotal( String numerKalkulacji,
+                        Date dataKalkulacji,
+                        String numerUmowy,
+                        Date dataZawarcia,
+                        Date wazneOd,
+                        Date wazneDo,
+                        String nazwaProduktu,
+                        String statusUmowy,
+                        BigDecimal skladka,
+                        String platnosc,
+                        String agent,
+                        String nrWewnAgenta,
+                        String uzytkownik,
+                        String emailUzytkownika,
+                        String kanalDystrybucji,
+                        String nazwaSektoraSprzedazy,
+                        String dyrektorSektora,
+                        String segmentSprzedazy,
+                        String dyrektorSegmentu,
+                        String miasto,
+                        String mzaKierownikZespolu,
+                        String telefonUzytkownika) {
+
+        this.numerKalkulacji = numerKalkulacji;
+        this.dataKalkulacji = dataKalkulacji;
+        this.numerUmowy = numerUmowy;
+        this.dataZawarcia = dataZawarcia;
+        this.wazneOd = wazneOd;
+        this.wazneDo = wazneDo;
+        this.nazwaProduktu = nazwaProduktu;
+        this.statusUmowy = statusUmowy;
+        this.skladka = skladka;
+        this.platnosc = platnosc;
+        this.agent = agent;
+        this.nrWewnAgenta = nrWewnAgenta;
+        this.uzytkownik = uzytkownik;
+        this.emailUzytkownika = emailUzytkownika;
+        this.kanalDystrybucji = kanalDystrybucji;
+        this.nazwaSektoraSprzedazy = nazwaSektoraSprzedazy;
+        this.dyrektorSektora = dyrektorSektora;
+        this.segmentSprzedazy = segmentSprzedazy;
+        this.dyrektorSegmentu = dyrektorSegmentu;
+        this.miasto = miasto;
+        this.mzaKierownikZespolu = mzaKierownikZespolu;
+        this.telefonUzytkownika = telefonUzytkownika;
+    }
 }
 
 
