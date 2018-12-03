@@ -1,20 +1,19 @@
 package com.dfsp.dashboard.entities;
 
 
+import com.dfsp.dashboard.config.Constans;
 import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Date;
 
-@Setter
-@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @ToString
 @Entity
-@Table(name = "raport_test")
+@Table(name = Constans.TABLE_NAME)
 public class RaportTotal {
 
     @Id
