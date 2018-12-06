@@ -31,9 +31,7 @@ public class ManagerXLS<T> {
 
     Class<T> clazz;
 
-
     public File saveListToXLSFileInToDirectory(List<T> series, String path, String fileName) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, IOException, InstantiationException {
-
 
         HSSFWorkbook workbook = new HSSFWorkbook();
         HSSFSheet sheet = workbook.createSheet(fileName);
@@ -198,10 +196,8 @@ public class ManagerXLS<T> {
                 e.printStackTrace();
             }
 
-
           //  break;
         }
-
 
         workbook.close();
         inputStream.close();

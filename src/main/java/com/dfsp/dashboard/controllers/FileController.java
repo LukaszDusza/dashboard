@@ -105,7 +105,54 @@ public class FileController {
         }
     }
 
-//    @PostMapping(value = "create")
+    @PostMapping(value = "save/raport")
+    public MyFile saveRaport(@RequestBody List<RaportTotal> raport) throws IOException, IllegalAccessException, NoSuchMethodException, InvocationTargetException, InstantiationException {
+
+        ManagerXLS<RaportTotal> raportTotalManagerXLS = new ManagerXLS<>(RaportTotal.class);
+
+        File newFile = raportTotalManagerXLS.saveListToXLSFileInToDirectory(raport, uploads, "raport");
+        return new MyFile(newFile.getName(), newFile.getAbsolutePath());
+
+    }
+
+    @PostMapping(value = "save/raport/agr")
+    public MyFile saveRaportAgr(@RequestBody List<RaportAgr> raport) throws IOException, IllegalAccessException, NoSuchMethodException, InvocationTargetException, InstantiationException {
+
+        ManagerXLS<RaportAgr> raportTotalManagerXLS = new ManagerXLS<>(RaportAgr.class);
+
+        File newFile = raportTotalManagerXLS.saveListToXLSFileInToDirectory(raport, uploads, "raport_agr");
+        return new MyFile(newFile.getName(), newFile.getAbsolutePath());
+
+    }
+
+    @GetMapping(value = "save/total")
+    public MyFile saveRaportTotal() throws IOException, IllegalAccessException, NoSuchMethodException, InvocationTargetException, InstantiationException {
+
+        List<RaportTotal> raport = raportDasRepository.findAll();
+
+        ManagerXLS<RaportTotal> raportTotalManagerXLS = new ManagerXLS<>(RaportTotal.class);
+
+        File newFile = raportTotalManagerXLS.saveListToXLSFileInToDirectory(raport, uploads, "total_raport");
+        return new MyFile(newFile.getName(), newFile.getAbsolutePath());
+
+    }
+
+    @PostMapping("replace")
+    public void replaceFromFile(@RequestParam("file") MultipartFile upload) throws IOException, ParseException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+
+        ManagerXLS<RaportTotal> manager = new ManagerXLS<>(RaportTotal.class);
+        add(manager.saveXLSToList(upload));
+
+    }
+
+    private void add(List<RaportTotal> list) {
+
+        raportDasRepository.deleteAll();
+        raportDasRepository.flush();
+        raportDasRepository.saveAll(list);
+    }
+
+    //    @PostMapping(value = "create")
 //    public MyFile createXLS(@RequestBody List<RaportAgr> raport) throws IOException {
 //
 //        HSSFWorkbook workbook = new HSSFWorkbook();
@@ -204,54 +251,5 @@ public class FileController {
 //
 //    }
 
-
-    @PostMapping(value = "save/raport")
-    public MyFile saveRaport(@RequestBody List<RaportTotal> raport) throws IOException, IllegalAccessException, NoSuchMethodException, InvocationTargetException, InstantiationException {
-
-        ManagerXLS<RaportTotal> raportTotalManagerXLS = new ManagerXLS<>(RaportTotal.class);
-
-        File newFile = raportTotalManagerXLS.saveListToXLSFileInToDirectory(raport, uploads, "raport");
-        return new MyFile(newFile.getName(), newFile.getAbsolutePath());
-
-    }
-
-    @PostMapping(value = "save/raport/agr")
-    public MyFile saveRaportAgr(@RequestBody List<RaportAgr> raport) throws IOException, IllegalAccessException, NoSuchMethodException, InvocationTargetException, InstantiationException {
-
-        ManagerXLS<RaportAgr> raportTotalManagerXLS = new ManagerXLS<>(RaportAgr.class);
-
-        File newFile = raportTotalManagerXLS.saveListToXLSFileInToDirectory(raport, uploads, "raport_agr");
-        return new MyFile(newFile.getName(), newFile.getAbsolutePath());
-
-    }
-
-    @GetMapping(value = "save/total")
-    public MyFile saveRaportTotal() throws IOException, IllegalAccessException, NoSuchMethodException, InvocationTargetException, InstantiationException {
-
-        List<RaportTotal> raport = raportDasRepository.findAll();
-
-        ManagerXLS<RaportTotal> raportTotalManagerXLS = new ManagerXLS<>(RaportTotal.class);
-
-        File newFile = raportTotalManagerXLS.saveListToXLSFileInToDirectory(raport, uploads, "total_raport");
-        return new MyFile(newFile.getName(), newFile.getAbsolutePath());
-
-    }
-
-    @PostMapping("replace")
-    public void replaceFromFile(@RequestParam("file") MultipartFile upload) throws IOException, ParseException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-
-        ManagerXLS<RaportTotal> manager = new ManagerXLS<>(RaportTotal.class);
-        add(manager.saveXLSToList(upload));
-
-    }
-
-    private void add(List<RaportTotal> list) {
-
-        raportDasRepository.deleteAll();
-        raportDasRepository.flush();
-        raportDasRepository.saveAll(list);
-
-
-    }
 
 }
