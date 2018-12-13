@@ -7,7 +7,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -15,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static com.dfsp.dashboard.security.Constans.LOGIN;
 import static com.dfsp.dashboard.security.Constans.SIGN_UP_URL;
+
 
 
 @Configuration
@@ -42,7 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
-               // .anyRequest().authenticated();
+             //   .anyRequest().authenticated();
                 .anyRequest().permitAll();
 
         http
