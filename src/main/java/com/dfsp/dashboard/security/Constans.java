@@ -9,8 +9,8 @@ public class Constans {
     public static final String FILES_UPLOAD = "/files/upload/";
 
 
-
-    public static final int EXPIRATION_TIME = 432000000; //5 days
+    //432000000; //5 days
+    public static final int EXPIRATION_TIME = 432000000;
     public static final String SECRET = "SecretKay";
     public static final String AUTH_HEADER = "Authorization";
     public static final String TOKEN_PREFIX = "Bearer ";

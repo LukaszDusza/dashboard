@@ -31,6 +31,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
 
+
         try {
 
             UserApp userApp = new ObjectMapper().readValue(request.getInputStream(), UserApp.class);
@@ -47,6 +48,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             //   e.printStackTrace();
         }
     }
+
 
 
     @Override
