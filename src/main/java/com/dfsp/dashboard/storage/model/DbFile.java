@@ -30,4 +30,10 @@ public class DbFile {
         this.fileType = fileType;
         this.data = data;
     }
+
+    public DbFile(String id, String fileName, String fileType) {
+        this.id = id;
+        this.fileName = fileName;
+        this.fileType = fileType;
+    }
 }

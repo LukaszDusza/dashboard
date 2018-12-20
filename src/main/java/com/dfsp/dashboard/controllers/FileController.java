@@ -8,6 +8,7 @@ import com.dfsp.dashboard.repositories.RaportDasRepository;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -142,6 +143,16 @@ public class FileController {
 
         ManagerXLS<RaportTotal> manager = new ManagerXLS<>(RaportTotal.class);
         add(manager.saveXLSToList(upload));
+
+    }
+
+    @GetMapping("replace/fromlist")
+    public void replaceFileFromList(@RequestParam("filepath") String filePath) throws IOException, ParseException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+
+        MultipartFile multipartFile = new MockMultipartFile("test.xls", new FileInputStream(new File(filePath)));
+
+        ManagerXLS<RaportTotal> manager = new ManagerXLS<>(RaportTotal.class);
+        add(manager.saveXLSToList(multipartFile));
 
     }
 

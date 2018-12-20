@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -69,7 +70,14 @@ public class FileDBController {
 
     @GetMapping("dblist")
     public ResponseEntity<List<DbFile>> getDBFileList() {
-        return new ResponseEntity<>(dBFileStorageService.getAllDbFiles(), HttpStatus.OK);
+
+        List<DbFile> dbFiles  = new ArrayList<>();
+        dBFileStorageService.getAllDbFiles()
+                .stream()
+                .map( f -> dbFiles.add(new DbFile(f.getId(), f.getFileName(), f.getFileType())))
+                .collect(Collectors.toList());
+
+        return new ResponseEntity<>(dbFiles, HttpStatus.OK);
     }
 
     @DeleteMapping("deletedb/{file}")
