@@ -31,7 +31,7 @@ public class CSV
      */
 
     private char separator;
-    private ArrayList<String> fields;
+    private List<String> fields;
     private boolean eofSeen;
     private Reader in;
 
@@ -65,32 +65,29 @@ public class CSV
         return new InputStreamReader(pin, "UTF-8");
     }
 
-    public CSV(boolean stripMultipleNewlines,
-               char separator,
-               Reader input)
-    {
-        this.stripMultipleNewlines = stripMultipleNewlines;
-        this.separator = separator;
-        this.fields = new ArrayList<String>();
-        this.eofSeen = false;
-        this.in = new BufferedReader(input);
-    }
+//    public CSV(boolean stripMultipleNewlines,
+//               char separator,
+//               Reader input)
+//    {
+//        this.stripMultipleNewlines = stripMultipleNewlines;
+//        this.separator = separator;
+//        this.fields = new ArrayList<>();
+//        this.eofSeen = false;
+//        this.in = new BufferedReader(input);
+//    }
 
     public CSV(boolean stripMultipleNewlines,
                char separator,
                InputStream input)
-            throws java.io.IOException,
-            java.io.UnsupportedEncodingException
-    {
+            throws java.io.IOException {
         this.stripMultipleNewlines = stripMultipleNewlines;
         this.separator = separator;
-        this.fields = new ArrayList<String>();
+        this.fields = new ArrayList<>();
         this.eofSeen = false;
         this.in = new BufferedReader(stripBom(input));
     }
 
-    public boolean hasNext() throws java.io.IOException
-    {
+    public boolean hasNext() throws java.io.IOException {
         if ( eofSeen ) return false;
         fields.clear();
         eofSeen = split( in, fields );
@@ -145,7 +142,7 @@ public class CSV
     }
 
     // Returns true when EOF has been seen.
-    private boolean split(Reader in,ArrayList<String> fields)
+    private boolean split(Reader in, List<String> fields)
             throws java.io.IOException
     {
         StringBuilder sbuf = new StringBuilder();
