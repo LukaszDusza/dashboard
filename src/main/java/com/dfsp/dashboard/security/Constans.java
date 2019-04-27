@@ -10,7 +10,7 @@ public class Constans {
 
 
     //432000000; //5 days
-    public static final int EXPIRATION_TIME = 315;
+    public static final int EXPIRATION_TIME = 86_400_000;
     public static final String SECRET = "SecretKay";
     public static final String AUTH_HEADER = "Authorization";
     public static final String TOKEN_PREFIX = "Bearer ";
