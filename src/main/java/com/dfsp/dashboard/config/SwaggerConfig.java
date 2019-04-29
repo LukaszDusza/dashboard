@@ -15,10 +15,11 @@ public class SwaggerConfig {
 
     @Bean
     public Docket marketApi() {
-        return new Docket(DocumentationType.SWAGGER_2)
+        return new Docket(DocumentationType.SWAGGER_12)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.dfsp.dashboard.controllers"))
-                .paths(regex("/api.*"))
+//                .apis(RequestHandlerSelectors.basePackage("com.dfsp.dashboard.storage.controllers"))
+               // .paths(regex("/.*"))
                 .build();
     }
 }

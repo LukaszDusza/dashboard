@@ -1,6 +1,8 @@
 package com.dfsp.dashboard.market;
 
-import com.dfsp.dashboard.helpers.ManagerXLS;
+import com.google.gson.Gson;
+import org.apache.poi.ss.usermodel.Cell;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -11,20 +13,17 @@ import java.util.Map;
 @Service
 public class MarketService {
 
-    private FileExtractor fileExtractor;
+    private FileManager fileManager;
 
-
-    public Map<String, List<String>> extractXlsFile(MultipartFile multipartFile) {
-
-        fileExtractor = new FileExtractor();
-        try {
-            fileExtractor.extractXLSFile(multipartFile);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return null;
+    public MarketService(FileManager fileManager) {
+        this.fileManager = fileManager;
     }
 
+    public  Map<String, List<String>> parseXlsFileToMap(MultipartFile multipartFile) throws IOException {
+        return fileManager.xlsToMap(multipartFile);
+    }
 
+    public String getJsonData(Map<Cell, List<Cell>> collection) {
+        return new Gson().toJson(collection);
+    }
 }

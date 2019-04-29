@@ -1,14 +1,20 @@
 package com.dfsp.dashboard.controllers;
 
 import com.dfsp.dashboard.entities.Market;
+import com.dfsp.dashboard.entities.ReflectClass;
 import com.dfsp.dashboard.market.MarketService;
 import com.dfsp.dashboard.repositories.MarketRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import org.apache.poi.ss.usermodel.Cell;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import springfox.documentation.spring.web.json.Json;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -86,9 +92,18 @@ public class MarketController {
     }
 
 
-    @PostMapping("/file")
-    public Map<String, List<String>> sendXlsFile(@RequestParam MultipartFile file) {
-        marketService.extractXlsFile(file);
-        return null;
+    @PostMapping("/files/xls/save")
+    public String saveXlsFile(@RequestParam MultipartFile file) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonResp = objectMapper.writeValueAsString(marketService.parseXlsFileToMap(file));
+        System.out.println(jsonResp);
+
+        //todo - add save file to directory
+        return jsonResp;
     }
+
+    //todo add method load files list
+
+    //todo add method send JSON from xls file from directory
+
 }
