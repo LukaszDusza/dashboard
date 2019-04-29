@@ -1,13 +1,16 @@
 package com.dfsp.dashboard.controllers;
 
 import com.dfsp.dashboard.entities.Market;
+import com.dfsp.dashboard.market.MarketService;
 import com.dfsp.dashboard.repositories.MarketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 
@@ -16,8 +19,14 @@ import java.util.Optional;
 @RequestMapping("/api/market")
 public class MarketController {
 
-    @Autowired
-    MarketRepository marketRepository;
+    private MarketService marketService;
+    private MarketRepository marketRepository;
+
+
+    public MarketController(MarketService marketService, MarketRepository marketRepository) {
+        this.marketService = marketService;
+        this.marketRepository = marketRepository;
+    }
 
     @GetMapping("/all")
     public List<Market> getMarket() {
@@ -74,5 +83,12 @@ public class MarketController {
     public String deleteMarket(@PathVariable("id") Long id) {
         marketRepository.deleteById(id);
         return "market id: " + id + " deleted!";
+    }
+
+
+    @PostMapping("/file")
+    public Map<String, List<String>> sendXlsFile(@RequestParam MultipartFile file) {
+        marketService.extractXlsFile(file);
+        return null;
     }
 }
