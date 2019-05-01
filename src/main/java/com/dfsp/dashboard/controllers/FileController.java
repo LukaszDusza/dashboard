@@ -1,20 +1,29 @@
 package com.dfsp.dashboard.controllers;
 
+import com.dfsp.dashboard.config.Constans;
 import com.dfsp.dashboard.entities.RaportTotal;
 import com.dfsp.dashboard.helpers.ManagerXLS;
 import com.dfsp.dashboard.market.MarketService;
+import com.dfsp.dashboard.model.LocalFile;
+import com.dfsp.dashboard.model.MessageModel;
 import com.dfsp.dashboard.model.MyFile;
 import com.dfsp.dashboard.model.RaportAgr;
 import com.dfsp.dashboard.repositories.RaportDasRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.activation.MimetypesFileTypeMap;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
@@ -30,7 +39,7 @@ import java.util.stream.Collectors;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/files/")
+@RequestMapping(Constans.FILES)
 public class FileController {
 
     private ServletContext servletContext;
@@ -159,17 +168,11 @@ public class FileController {
 
     }
 
-    @PostMapping("/xls/save")
-    public String saveXlsFile(@RequestParam MultipartFile file) throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        String jsonResp = objectMapper.writeValueAsString(marketService.parseXlsFileToMap(file));
-        System.out.println(jsonResp);
-
-        //todo - add save file to directory
-        return jsonResp;
+    @PostMapping("/xls/save-to-json")
+    public void saveXlsFileToJson(@RequestParam MultipartFile file) {
+        marketService.marketModelXlsToJsonFile(file);
     }
 
-    //todo add method load files list
     //todo add method send JSON from xls file from directory
 
     private void add(List<RaportTotal> list) {
@@ -179,104 +182,65 @@ public class FileController {
         raportDasRepository.saveAll(list);
     }
 
-    //    @PostMapping(value = "create")
-//    public MyFile createXLS(@RequestBody List<RaportAgr> raport) throws IOException {
-//
-//        HSSFWorkbook workbook = new HSSFWorkbook();
-//        HSSFSheet sheet = workbook.createSheet("raport zagregowany");
-//
-//        Font headerFont = workbook.createFont();
-//        headerFont.setBold(true);
-//        headerFont.setFontHeightInPoints((short) 10);
-//        headerFont.setColor(IndexedColors.BLACK.getIndex());
-//
-//        CellStyle headerCellStyle = workbook.createCellStyle();
-//        headerCellStyle.setFont(headerFont);
-//
-//
-//        String[] columns = {
-//                "Agent",
-//                "Kanał Dystrybucji",
-//                "Nazwa Sektora Sprzedaży",
-//                "Dyrektor Sektora",
-//                "Segment Sprzedaży",
-//                "Dyrektor Segmentu",
-//                "MZA Kierownik Zespołu",
-//                "Miasto",
-//                "nr wewnętrzny Agenta",
-//                "Liczba polis",
-//                " Suma składek PLN"
-//        };
-//
-//        Row headerRow = sheet.createRow(0);
-//
-//        for (int i = 0; i < columns.length; i++) {
-//            Cell cell = headerRow.createCell(i);
-//            cell.setCellValue(columns[i]);
-//            cell.setCellStyle(headerCellStyle);
-//        }
-//
-//        AtomicInteger counter = new AtomicInteger();
-//
-//        raport.forEach(b -> {
-//
-//            counter.getAndIncrement();
-//
-//            HSSFRow row = sheet.createRow(counter.get());
-//
-//            HSSFCell cell1 = row.createCell(0);
-//            HSSFCell cell2 = row.createCell(1);
-//            HSSFCell cell3 = row.createCell(2);
-//            HSSFCell cell4 = row.createCell(3);
-//            HSSFCell cell5 = row.createCell(4);
-//            HSSFCell cell6 = row.createCell(5);
-//            HSSFCell cell7 = row.createCell(6);
-//            HSSFCell cell8 = row.createCell(7);
-//            HSSFCell cell9 = row.createCell(8);
-//            HSSFCell cell10 = row.createCell(9);
-//            HSSFCell cell11 = row.createCell(10);
-//
-//            cell1.setCellValue(b.getAgent());
-//            cell2.setCellValue(b.getKanalDystrybucji());
-//            cell3.setCellValue(b.getNazwaSektoraSprzedazy());
-//            cell4.setCellValue(b.getDyrektorSektora());
-//            cell5.setCellValue(b.getSegmentSprzedazy());
-//            cell6.setCellValue(b.getDyrektorSegmentu());
-//            cell7.setCellValue(b.getMzaKierownikZespolu());
-//            cell8.setCellValue(b.getMiasto());
-//            cell9.setCellValue(b.getNrWewAgenta());
-//            cell10.setCellValue(b.getQuantity());
-//            cell11.setCellValue(b.getAmount());
-//        });
-//
-//
-//        for (int i = 0; i < columns.length; i++) {
-//            sheet.autoSizeColumn(i);
-//        }
-//
-//
-//        long time = System.currentTimeMillis();
-//        String file = uploads + "raport" + time + ".xls";
-//
-//        try {
-//            createDirectory();
-//            byte[] bytes = workbook.getBytes();
-//            Path path = Paths.get(file);
-//            //  Files.write(path, bytes);
-//
-//
-//            workbook.write(new File(file));
-//
-//            workbook.close();
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        File newFile = new File(uploads + file);
-//        return new MyFile(newFile.getName(), file);
-//
-//    }
+    @GetMapping(Constans.RAPORTS_FILES_LIST)
+    public List<LocalFile> getRaportsList() throws IOException {
 
+        return Files.walk(Paths.get(Constans.LOCAL_FILES_PATH_RAPORTS))
+                .filter(Files::isRegularFile)
+                .map(f -> {
 
+                    try {
+                        BasicFileAttributes bs = Files.readAttributes(f.toAbsolutePath(), BasicFileAttributes.class);
+
+                        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                                .path(Constans.FILES + Constans.DOWNLOAD_FILES_URI)
+                                .path(f.getFileName().toString())
+                                .toUriString();
+
+                        String fileDeleteUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                                .path(Constans.FILES + Constans.DELETE_FILES_URI)
+                                .path(f.getFileName().toString())
+                                .toUriString();
+
+                        return new LocalFile(
+                                f.getFileName().toString(),
+                                bs.creationTime().toString(),
+                                bs.lastModifiedTime().toString(),
+                                bs.size(),
+                                fileDownloadUri,
+                                fileDeleteUri,
+                                Files.probeContentType(f.toAbsolutePath()));
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        return null;
+                    }
+                }).collect(Collectors.toList());
+    }
+
+    @GetMapping(Constans.DOWNLOAD_FILES_URI + "{filename}")
+    public ResponseEntity<?> downloadRaportFile(@PathVariable String filename) throws IOException {
+
+        Path path = Paths.get(Constans.LOCAL_FILES_PATH_RAPORTS + filename);
+        Resource resource = new UrlResource(path.toUri());
+
+        File targetFile = new File(Constans.LOCAL_FILES_PATH_RAPORTS + filename);
+        //  MimetypesFileTypeMap mimetypesFileTypeMap = new MimetypesFileTypeMap();
+        //  String contentType = Files.probeContentType(path);
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + targetFile.getName() + "\"")
+                .contentLength(targetFile.length())
+                .body(resource);
+    }
+
+    @DeleteMapping(Constans.DELETE_FILES_URI + "{filename}")
+    public ResponseEntity<MessageModel> deleteRaportFile(@PathVariable("filename") String fileName) {
+        if (new File(Constans.LOCAL_FILES_PATH_RAPORTS + fileName).delete()) {
+            return new ResponseEntity<>(MessageModel.FILE_SUCCES_DELETED, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(MessageModel.FILE_NOT_FOUND, HttpStatus.NOT_FOUND);
+        }
+    }
 }

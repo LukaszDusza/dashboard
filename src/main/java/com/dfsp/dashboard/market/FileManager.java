@@ -1,9 +1,9 @@
 package com.dfsp.dashboard.market;
 
 import com.dfsp.dashboard.config.Constans;
-import org.apache.poi.hssf.usermodel.HSSFName;
+import com.dfsp.dashboard.model.MarketModel;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.springframework.stereotype.Component;
@@ -21,8 +21,10 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import static com.dfsp.dashboard.config.Constans.LOCAL_FILES_PATH_RAPORTS;
+
 @Component
-public class FileManager {
+public class FileManager<T> {
 
     private ServletContext servletContext;
 
@@ -63,7 +65,7 @@ public class FileManager {
     }
 
     private void createLocalDirectory() {
-        Path path = Paths.get(Constans.APP_LOCAL_FILES_PATH);
+        Path path = Paths.get(Constans.LOCAL_FILES_PATH_RAPORTS);
         if (!Files.exists(path)) {
             try {
                 Files.createDirectories(path);
@@ -86,19 +88,32 @@ public class FileManager {
     }
 
     private void writeXlsFileToLocalDirectory(HSSFWorkbook workbook) throws IOException {
-        workbook.write(new File(Constans.APP_LOCAL_FILES_PATH
-                + Constans.NEW_FILE_RAPORT_TITLE + "_" + currentTime() + ".xls"));
+        workbook.write(new File(Constans.LOCAL_FILES_PATH_RAPORTS
+                + Constans.RAPORT_FILES_TITLE + "_" + currentTime() + ".xls"));
         workbook.close();
     }
 
     private void writeXlsFileToContextDirectory(HSSFWorkbook workbook) throws IOException {
         workbook.write(new File(Constans.APP_CONTEXT_FILES_PATH
-                + Constans.NEW_FILE_RAPORT_TITLE + "_" + currentTime() + ".xls"));
+                + Constans.RAPORT_FILES_TITLE + "_" + currentTime() + ".xls"));
         workbook.close();
     }
 
     private String currentTime() {
         DateFormat df = new SimpleDateFormat(Constans.DATE_FORMAT_PATTERN);
         return df.format(new Date(System.currentTimeMillis()));
+    }
+
+    public String getNewFileNameJson() {
+        return Constans.RAPORT_FILES_TITLE + "_" + currentTime() + ".json";
+    }
+
+    public void writeToJsonFile(List<T> obj, String path) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.writerWithDefaultPrettyPrinter().writeValue(new File(path + getNewFileNameJson()), obj);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
