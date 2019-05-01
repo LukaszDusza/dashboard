@@ -91,19 +91,4 @@ public class MarketController {
         return "market id: " + id + " deleted!";
     }
 
-
-    @PostMapping("/files/xls/save")
-    public String saveXlsFile(@RequestParam MultipartFile file) throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        String jsonResp = objectMapper.writeValueAsString(marketService.parseXlsFileToMap(file));
-        System.out.println(jsonResp);
-
-        //todo - add save file to directory
-        return jsonResp;
-    }
-
-    //todo add method load files list
-
-    //todo add method send JSON from xls file from directory
-
 }
