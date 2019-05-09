@@ -2,9 +2,11 @@ package com.dfsp.dashboard.controllers;
 
 import com.dfsp.dashboard.entities.RaportTotal;
 import com.dfsp.dashboard.helpers.ManagerXLS;
+import com.dfsp.dashboard.market.MarketService;
 import com.dfsp.dashboard.model.MyFile;
 import com.dfsp.dashboard.model.RaportAgr;
 import com.dfsp.dashboard.repositories.RaportDasRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,7 @@ import java.util.stream.Collectors;
 public class FileController {
 
     private ServletContext servletContext;
+    private MarketService marketService;
 
     //  private String uploads = new File("").getAbsolutePath() + "//uploads//";
     private String uploads;
@@ -39,9 +42,9 @@ public class FileController {
     @Autowired
     private RaportDasRepository raportDasRepository;
 
-    public FileController(ServletContext servletContext) {
+    public FileController(ServletContext servletContext, MarketService marketService) {
         this.servletContext = servletContext;
-        createDirectory();
+        this.marketService = marketService;
     }
 
     @GetMapping("download")
@@ -155,6 +158,19 @@ public class FileController {
         add(manager.saveXLSToList(multipartFile));
 
     }
+
+    @PostMapping("/xls/save")
+    public String saveXlsFile(@RequestParam MultipartFile file) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonResp = objectMapper.writeValueAsString(marketService.parseXlsFileToMap(file));
+        System.out.println(jsonResp);
+
+        //todo - add save file to directory
+        return jsonResp;
+    }
+
+    //todo add method load files list
+    //todo add method send JSON from xls file from directory
 
     private void add(List<RaportTotal> list) {
 
