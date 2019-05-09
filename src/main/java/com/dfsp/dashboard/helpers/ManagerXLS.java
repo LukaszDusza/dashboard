@@ -158,7 +158,6 @@ public class ManagerXLS<T> {
 
                 Cell cell = sheet.getRow(rowIndex).getCell(collIndex);
                 props.add(cell.toString());
-
             }
 
             try {

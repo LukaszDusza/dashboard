@@ -45,6 +45,7 @@ public class FileController {
     public FileController(ServletContext servletContext, MarketService marketService) {
         this.servletContext = servletContext;
         this.marketService = marketService;
+        createDirectory();
     }
 
     @GetMapping("download")
